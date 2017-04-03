@@ -5,13 +5,39 @@ apply plugin: 'java'
 
 sourceCompatibility = 1.8
 
+sourceSets {
+    integrationTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/integration-test/java')
+        }
+        resources.srcDir file('src/integration-test/resources')
+    }
+}
+
+configurations {
+    integrationTestCompile.extendsFrom testCompile
+    integrationTestRuntime.extendsFrom testRuntime
+}
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
     compile('org.liquibase:liquibase-core:3.5.3')
-    compile('com.h2database:h2:1.4.194')
+    compile('junit:junit:4.12')
 
-    testCompile('junit:junit:4.12')
+    integrationTestCompile('com.h2database:h2:1.4.194')
 }
+
+task integrationTest(type: Test) {
+    testClassesDir = sourceSets.integrationTest.output.classesDir
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    group 'Verification'
+}
+
+integrationTest.dependsOn test
+integrationTest.mustRunAfter test
+check.dependsOn integrationTest
