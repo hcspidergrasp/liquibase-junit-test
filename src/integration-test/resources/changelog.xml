@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="1" author="John Doe">
+        <createTable tableName="tags">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="name" type="varchar(100)" />
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="John Doe">
+        <insert tableName="tags">
+            <column name="name" value="liquibase" />
+            <column name="id" value="1" />
+        </insert>
+    </changeSet>
+</databaseChangeLog>
