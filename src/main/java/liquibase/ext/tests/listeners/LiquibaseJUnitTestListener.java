@@ -1,7 +1,7 @@
 package liquibase.ext.tests.listeners;
 
+import liquibase.ext.tests.LiquibaseTaskLauncher;
 import liquibase.ext.tests.annotations.LiquibaseTest;
-import liquibase.integration.commandline.Main;
 import org.junit.runner.Description;
 import org.junit.runner.notification.RunListener;
 
@@ -10,8 +10,18 @@ import org.junit.runner.notification.RunListener;
  */
 public class LiquibaseJUnitTestListener extends RunListener {
 
-    /** Flag to indicate that schema was updated before atomic test was started */
+    /** Flag to indicate that schema was updated before atomic test was started. */
     private boolean updated = false;
+    private int index;
+    private int count;
+
+    public LiquibaseJUnitTestListener() {
+    }
+
+    public LiquibaseJUnitTestListener(boolean updated, int count) {
+        this.updated = updated;
+        this.count = count;
+    }
 
     /**
      * Runs before atomic test start.
@@ -24,7 +34,7 @@ public class LiquibaseJUnitTestListener extends RunListener {
     public void testStarted(Description description) throws Exception {
         LiquibaseTest liquibaseTest = description.getAnnotation(LiquibaseTest.class);
         if (liquibaseTest != null) {
-            Main.run(new String[]{"update"});
+            LiquibaseTaskLauncher.update();
             this.updated = true;
         }
     }
@@ -37,8 +47,9 @@ public class LiquibaseJUnitTestListener extends RunListener {
      */
     @Override
     public void testFinished(Description description) throws Exception {
-        if (updated) {
-            Main.run(new String[]{"dropAll"});
+        index++;
+        if ((updated && count == 1) || (updated && count > 1 && index >= count)) {
+            LiquibaseTaskLauncher.dropAll();
             updated = false;
         }
     }
