@@ -48,7 +48,7 @@ public class LiquibaseJUnitTestListener extends RunListener {
     @Override
     public void testFinished(Description description) throws Exception {
         index++;
-        if ((updated && count == 1) || (updated && count > 1 && index >= count)) {
+        if ((updated && count == 0) || (updated && count > 0 && index >= count)) {
             LiquibaseTaskLauncher.dropAll();
             updated = false;
         }
