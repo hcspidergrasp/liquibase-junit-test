@@ -1,4 +1,5 @@
 # Liquibase JUnit Test Extension
+[![Build Status](https://travis-ci.org/hcspidergrasp/liquibase-junit-test.svg?branch=master)](https://travis-ci.org/hcspidergrasp/liquibase-junit-test)
 
 This extension allows developer to use Liquibase migrations in JUnit tests.
 It gives the ability to reset database schema and fill it with test data with Liquibase migration tools.

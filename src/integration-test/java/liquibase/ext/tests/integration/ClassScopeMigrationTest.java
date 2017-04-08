@@ -14,7 +14,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @RunWith(LiquibaseTestRunner.class)
-public class MethodScopeMigrationTest {
+@LiquibaseTest
+public class ClassScopeMigrationTest {
 
     private static final String QUERY_COUNT_TAGS = "select count(*) from tags";
 
@@ -27,8 +28,23 @@ public class MethodScopeMigrationTest {
     }
 
     @Test
-    @LiquibaseTest
     public void shouldRunWithoutExceptions() throws SQLException {
+        ResultSet resultSet = connection.createStatement()
+                .executeQuery(QUERY_COUNT_TAGS);
+        resultSet.next();
+        Assert.assertEquals(1, resultSet.getInt(1));
+    }
+
+    @Test
+    public void alsoShouldRunWithoutExceptions() throws SQLException {
+        ResultSet resultSet = connection.createStatement()
+                .executeQuery(QUERY_COUNT_TAGS);
+        resultSet.next();
+        Assert.assertEquals(1, resultSet.getInt(1));
+    }
+
+    @Test
+    public void anotherOneShouldRunWithoutExceptions() throws SQLException {
         ResultSet resultSet = connection.createStatement()
                 .executeQuery(QUERY_COUNT_TAGS);
         resultSet.next();
