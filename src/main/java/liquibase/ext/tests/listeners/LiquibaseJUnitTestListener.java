@@ -12,15 +12,8 @@ public class LiquibaseJUnitTestListener extends RunListener {
 
     /** Flag to indicate that schema was updated before atomic test was started. */
     private boolean updated = false;
-    private int index;
-    private int count;
 
     public LiquibaseJUnitTestListener() {
-    }
-
-    public LiquibaseJUnitTestListener(boolean updated, int count) {
-        this.updated = updated;
-        this.count = count;
     }
 
     /**
@@ -47,8 +40,7 @@ public class LiquibaseJUnitTestListener extends RunListener {
      */
     @Override
     public void testFinished(Description description) throws Exception {
-        index++;
-        if ((updated && count == 0) || (updated && count > 0 && index >= count)) {
+        if (updated) {
             LiquibaseTaskLauncher.dropAll();
             updated = false;
         }

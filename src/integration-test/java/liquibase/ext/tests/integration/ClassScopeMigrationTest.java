@@ -51,16 +51,4 @@ public class ClassScopeMigrationTest {
         Assert.assertEquals(1, resultSet.getInt(1));
     }
 
-    @AfterClass
-    public static void finish() throws SQLException {
-        boolean error = false;
-        try {
-            connection.createStatement()
-                    .executeQuery(QUERY_COUNT_TAGS);
-        } catch (SQLException e) {
-            error = true;
-        }
-        Assert.assertTrue(error);
-        connection.close();
-    }
 }
