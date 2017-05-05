@@ -30,6 +30,8 @@ dependencies {
     compile('junit:junit:4.12')
 
     integrationTestCompile('com.h2database:h2:1.4.194')
+
+    testCompile('org.jmockit:jmockit:1.30')
 }
 
 task integrationTest(type: Test) {
