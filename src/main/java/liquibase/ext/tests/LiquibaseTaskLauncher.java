@@ -3,7 +3,7 @@ package liquibase.ext.tests;
 import liquibase.ext.tests.exceptions.LiquibaseMigrationRunException;
 import liquibase.integration.commandline.Main;
 
-public final class LiquibaseTaskLauncher {
+public class LiquibaseTaskLauncher {
 
     private static final String DEFAULT_MESSAGE = "Can't run Liquibase migrations during tests";
 

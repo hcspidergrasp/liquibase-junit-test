@@ -1,8 +1,7 @@
-package liquibase.ext.tests.integration;
+package liquibase.ext.tests.examples;
 
 import liquibase.ext.tests.annotations.LiquibaseTest;
 import liquibase.ext.tests.runners.LiquibaseTestRunner;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
