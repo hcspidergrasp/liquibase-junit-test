@@ -1,4 +1,4 @@
-package liquibase.ext.tests.integration;
+package liquibase.ext.tests.examples;
 
 import liquibase.ext.tests.annotations.LiquibaseTest;
 import liquibase.ext.tests.runners.LiquibaseTestRunner;
@@ -14,8 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @RunWith(LiquibaseTestRunner.class)
-@LiquibaseTest
-public class ClassScopeMigrationTest {
+public class MethodScopeMigrationTest {
 
     private static final String QUERY_COUNT_TAGS = "select count(*) from tags";
 
@@ -28,6 +27,7 @@ public class ClassScopeMigrationTest {
     }
 
     @Test
+    @LiquibaseTest
     public void shouldRunWithoutExceptions() throws SQLException {
         ResultSet resultSet = connection.createStatement()
                 .executeQuery(QUERY_COUNT_TAGS);
@@ -35,20 +35,16 @@ public class ClassScopeMigrationTest {
         Assert.assertEquals(1, resultSet.getInt(1));
     }
 
-    @Test
-    public void alsoShouldRunWithoutExceptions() throws SQLException {
-        ResultSet resultSet = connection.createStatement()
-                .executeQuery(QUERY_COUNT_TAGS);
-        resultSet.next();
-        Assert.assertEquals(1, resultSet.getInt(1));
+    @AfterClass
+    public static void finish() throws SQLException {
+        boolean error = false;
+        try {
+            connection.createStatement()
+                    .executeQuery(QUERY_COUNT_TAGS);
+        } catch (SQLException e) {
+            error = true;
+        }
+        Assert.assertTrue(error);
+        connection.close();
     }
-
-    @Test
-    public void anotherOneShouldRunWithoutExceptions() throws SQLException {
-        ResultSet resultSet = connection.createStatement()
-                .executeQuery(QUERY_COUNT_TAGS);
-        resultSet.next();
-        Assert.assertEquals(1, resultSet.getInt(1));
-    }
-
 }
