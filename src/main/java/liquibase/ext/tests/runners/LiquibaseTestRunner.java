@@ -37,7 +37,7 @@ public class LiquibaseTestRunner extends BlockJUnit4ClassRunner {
         if (liquibaseTest == null) {
             notifier.addListener(new LiquibaseJUnitTestListener());
         } else {
-            LiquibaseTaskLauncher.update();
+            LiquibaseTaskLauncher.update(liquibaseTest);
         }
         super.run(notifier);
         if (liquibaseTest != null) {

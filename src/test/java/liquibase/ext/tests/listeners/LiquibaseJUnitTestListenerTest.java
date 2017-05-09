@@ -23,30 +23,49 @@ import static org.mockito.internal.verification.VerificationModeFactory.times;
 @PrepareForTest(LiquibaseTaskLauncher.class)
 public class LiquibaseJUnitTestListenerTest {
 
-    private LiquibaseTest annotation = new LiquibaseTest() {
-
-        @Override
-        public Class<? extends Annotation> annotationType() {
-            return LiquibaseTest.class;
-        }
-
-    };
-
-    private Description description = Description.createSuiteDescription("Foo", annotation);
-
     @Test
     public void shouldRunUpdateIfMethodIsAnnotated() throws Exception {
+        LiquibaseTest annotation = new LiquibaseTest() {
+
+            @Override
+            public String changeLogFile() {
+                return "";
+            }
+
+            @Override
+            public Class<? extends Annotation> annotationType() {
+                return LiquibaseTest.class;
+            }
+
+        };
+        Description description = Description.createSuiteDescription("Foo", annotation);
+
         LiquibaseJUnitTestListener listener = new LiquibaseJUnitTestListener();
         PowerMockito.mockStatic(LiquibaseTaskLauncher.class);
 
         listener.testStarted(description);
 
         PowerMockito.verifyStatic(times(1));
-        LiquibaseTaskLauncher.update();
+        LiquibaseTaskLauncher.update(annotation);
     }
 
     @Test
     public void shouldRunDropAllIfMethodIsAnnotated() throws Exception {
+        LiquibaseTest annotation = new LiquibaseTest() {
+
+            @Override
+            public String changeLogFile() {
+                return "";
+            }
+
+            @Override
+            public Class<? extends Annotation> annotationType() {
+                return LiquibaseTest.class;
+            }
+
+        };
+        Description description = Description.createSuiteDescription("Foo", annotation);
+
         LiquibaseJUnitTestListener listener = new LiquibaseJUnitTestListener();
         PowerMockito.mockStatic(LiquibaseTaskLauncher.class);
         Whitebox.setInternalState(listener, "updated", true);
@@ -55,5 +74,31 @@ public class LiquibaseJUnitTestListenerTest {
 
         PowerMockito.verifyStatic(times(1));
         LiquibaseTaskLauncher.dropAll();
+    }
+
+    @Test
+    public void shouldRunUpdateIfMethodIsAnnotatedWithSpecifiedChangeLog() throws Exception {
+        LiquibaseTest annotation = new LiquibaseTest() {
+
+            @Override
+            public String changeLogFile() {
+                return "src/test/resources/changelog.xml";
+            }
+
+            @Override
+            public Class<? extends Annotation> annotationType() {
+                return LiquibaseTest.class;
+            }
+
+        };
+        Description description = Description.createSuiteDescription("Foo", annotation);
+
+        LiquibaseJUnitTestListener listener = new LiquibaseJUnitTestListener();
+        PowerMockito.mockStatic(LiquibaseTaskLauncher.class);
+
+        listener.testStarted(description);
+
+        PowerMockito.verifyStatic(times(1));
+        LiquibaseTaskLauncher.update(annotation);
     }
 }

@@ -1,6 +1,8 @@
 package liquibase.ext.tests;
 
+import liquibase.exception.CommandLineParsingException;
 import liquibase.exception.LiquibaseException;
+import liquibase.ext.tests.annotations.LiquibaseTest;
 import liquibase.ext.tests.exceptions.LiquibaseMigrationRunException;
 import liquibase.integration.commandline.Main;
 import org.junit.Test;
@@ -8,6 +10,9 @@ import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+
+import java.io.IOException;
+import java.lang.annotation.Annotation;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
@@ -24,6 +29,32 @@ public class LiquibaseTaskLauncherTest {
 
         PowerMockito.verifyStatic(times(1));
         Main.run(any());
+    }
+
+    @Test
+    public void shouldLaunchLiquibaseUpdateWithSpecified() throws Exception {
+        PowerMockito.mockStatic(Main.class);
+
+        LiquibaseTest annotation = new LiquibaseTest() {
+            @Override
+            public Class<? extends Annotation> annotationType() {
+                return LiquibaseTest.class;
+            }
+
+            @Override
+            public String changeLogFile() {
+                return "test";
+            }
+        };
+
+        LiquibaseTaskLauncher.update(annotation);
+
+        PowerMockito.verifyStatic(times(1));
+        Main.run(new String[] {
+                "--changeLogFile=test",
+                "update"
+        });
+
     }
 
     @Test

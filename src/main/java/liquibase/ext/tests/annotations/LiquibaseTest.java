@@ -13,4 +13,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface LiquibaseTest {
 
+    /**
+     * Mapped to change log file setting of the Liquibase runner.
+     */
+    String changeLogFile() default "";
+
 }

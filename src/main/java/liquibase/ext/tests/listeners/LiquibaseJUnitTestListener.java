@@ -27,7 +27,7 @@ public class LiquibaseJUnitTestListener extends RunListener {
     public void testStarted(Description description) throws Exception {
         LiquibaseTest liquibaseTest = description.getAnnotation(LiquibaseTest.class);
         if (liquibaseTest != null) {
-            LiquibaseTaskLauncher.update();
+            LiquibaseTaskLauncher.update(liquibaseTest);
             this.updated = true;
         }
     }
