@@ -4,6 +4,7 @@ import liquibase.ext.tests.annotations.LiquibaseTest;
 import liquibase.ext.tests.exceptions.LiquibaseMigrationRunException;
 import liquibase.integration.commandline.Main;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class LiquibaseTaskLauncher {
@@ -33,9 +34,15 @@ public class LiquibaseTaskLauncher {
     }
 
     public static void update(LiquibaseTest annotation) {
-        String[] args = new String[] {
-                ARG_CMD_CHANGE_LOG_FILE + ARG_EQUAL + annotation.changeLogFile()
-        };
+        String[] args = parseAnnotationSettings(annotation);
         update(args);
+    }
+
+    private static String[] parseAnnotationSettings(LiquibaseTest annotation) {
+        ArrayList<String> settings = new ArrayList<>();
+        if (annotation.changeLogFile().length() > 0) {
+            settings.add(ARG_CMD_CHANGE_LOG_FILE + ARG_EQUAL + annotation.changeLogFile());
+        }
+        return settings.toArray(new String[settings.size()]);
     }
 }

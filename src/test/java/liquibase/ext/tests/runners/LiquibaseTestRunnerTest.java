@@ -46,7 +46,13 @@ public class LiquibaseTestRunnerTest {
         runner.run(new RunNotifier());
 
         PowerMockito.verifyStatic(times(1));
-        LiquibaseTaskLauncher.update();
+        LiquibaseTaskLauncher.update(argThat(new ArgumentMatcher<LiquibaseTest>() {
+            @Override
+            public boolean matches(Object argument) {
+                LiquibaseTest annotation = (LiquibaseTest) argument;
+                return annotation.changeLogFile().length() == 0;
+            }
+        }));
 
         PowerMockito.verifyStatic(times(1));
         LiquibaseTaskLauncher.dropAll();
