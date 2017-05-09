@@ -26,6 +26,11 @@ public class LiquibaseJUnitTestListenerTest {
     private LiquibaseTest annotation = new LiquibaseTest() {
 
         @Override
+        public String changeLogFile() {
+            return "";
+        }
+
+        @Override
         public Class<? extends Annotation> annotationType() {
             return LiquibaseTest.class;
         }
