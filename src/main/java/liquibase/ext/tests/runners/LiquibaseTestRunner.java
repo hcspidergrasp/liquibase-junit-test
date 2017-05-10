@@ -1,10 +1,8 @@
 package liquibase.ext.tests.runners;
 
-import liquibase.ext.tests.LiquibaseTaskLauncher;
+import liquibase.ext.tests.utils.LiquibaseTaskLauncher;
 import liquibase.ext.tests.annotations.LiquibaseTest;
 import liquibase.ext.tests.listeners.LiquibaseJUnitTestListener;
-import liquibase.integration.commandline.Main;
-import org.junit.Test;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.InitializationError;

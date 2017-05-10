@@ -1,6 +1,6 @@
 package liquibase.ext.tests.runners;
 
-import liquibase.ext.tests.LiquibaseTaskLauncher;
+import liquibase.ext.tests.utils.LiquibaseTaskLauncher;
 import liquibase.ext.tests.annotations.LiquibaseTest;
 import liquibase.ext.tests.examples.ClassScopeDefinedChangeLog;
 import liquibase.ext.tests.examples.ClassScopeMigrationTest;

@@ -1,4 +1,4 @@
-package liquibase.ext.tests;
+package liquibase.ext.tests.utils;
 
 public enum LiquibaseTask {
 
