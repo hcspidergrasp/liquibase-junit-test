@@ -82,34 +82,4 @@ public class LiquibaseJUnitTestListenerTest {
         LiquibaseTaskLauncher.dropAll();
     }
 
-    @Test
-    public void shouldRunUpdateIfMethodIsAnnotatedWithSpecifiedChangeLog() throws Exception {
-        LiquibaseTest annotation = new LiquibaseTest() {
-
-            @Override
-            public String changeLogFile() {
-                return "src/test/resources/changelog.xml";
-            }
-
-            @Override
-            public String[] contexts() {
-                return new String[0];
-            }
-
-            @Override
-            public Class<? extends Annotation> annotationType() {
-                return LiquibaseTest.class;
-            }
-
-        };
-        Description description = Description.createSuiteDescription("Foo", annotation);
-
-        LiquibaseJUnitTestListener listener = new LiquibaseJUnitTestListener();
-        PowerMockito.mockStatic(LiquibaseTaskLauncher.class);
-
-        listener.testStarted(description);
-
-        PowerMockito.verifyStatic(times(1));
-        LiquibaseTaskLauncher.update(annotation);
-    }
 }
