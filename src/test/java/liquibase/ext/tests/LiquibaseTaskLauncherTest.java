@@ -44,6 +44,11 @@ public class LiquibaseTaskLauncherTest {
             public String changeLogFile() {
                 return "test";
             }
+
+            @Override
+            public String[] contexts() {
+                return new String[0];
+            }
         };
 
         LiquibaseTaskLauncher.update(annotation);

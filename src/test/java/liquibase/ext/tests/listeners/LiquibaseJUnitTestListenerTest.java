@@ -29,6 +29,11 @@ public class LiquibaseJUnitTestListenerTest {
             }
 
             @Override
+            public String[] contexts() {
+                return new String[0];
+            }
+
+            @Override
             public Class<? extends Annotation> annotationType() {
                 return LiquibaseTest.class;
             }
@@ -52,6 +57,11 @@ public class LiquibaseJUnitTestListenerTest {
             @Override
             public String changeLogFile() {
                 return "";
+            }
+
+            @Override
+            public String[] contexts() {
+                return new String[0];
             }
 
             @Override
@@ -79,6 +89,11 @@ public class LiquibaseJUnitTestListenerTest {
             @Override
             public String changeLogFile() {
                 return "src/test/resources/changelog.xml";
+            }
+
+            @Override
+            public String[] contexts() {
+                return new String[0];
             }
 
             @Override
