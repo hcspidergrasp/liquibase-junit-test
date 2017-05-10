@@ -1,6 +1,6 @@
 package liquibase.ext.tests.listeners;
 
-import liquibase.ext.tests.LiquibaseTaskLauncher;
+import liquibase.ext.tests.utils.LiquibaseTaskLauncher;
 import liquibase.ext.tests.annotations.LiquibaseTest;
 import org.junit.runner.Description;
 import org.junit.runner.notification.RunListener;

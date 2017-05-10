@@ -14,8 +14,12 @@ import java.lang.annotation.Target;
 public @interface LiquibaseTest {
 
     /**
-     * Mapped to change log file setting of the Liquibase runner.
+     * Mapped to change log file setting of Liquibase runner.
      */
     String changeLogFile() default "";
 
+    /**
+     * Mapped to context setting of Liquibase runner.
+     */
+    String[] contexts() default {};
 }

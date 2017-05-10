@@ -1,5 +1,9 @@
-package liquibase.ext.tests;
+package liquibase.ext.tests.utils;
 
+/**
+ * Represents Liquibase command line task types.
+ * Contains string representation of the command.
+ */
 public enum LiquibaseTask {
 
     UPDATE("update"),
